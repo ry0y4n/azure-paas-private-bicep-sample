@@ -30,3 +30,14 @@ module appService './module/app-service.bicep' = {
     appServicePlanId: appServicePlan.outputs.appServicePlanId
   }
 }
+
+// Create a Virtual Network
+module virtualNetwork './module/virtual-network.bicep' = {
+  scope: resourceGroup
+  name: 'virtualNetwork'
+  params: {
+    vnetName: 'myVnet-${uniquePostfix}'
+    subnetName: 'mySubnet-${uniquePostfix}'
+    location: location
+  }
+}
