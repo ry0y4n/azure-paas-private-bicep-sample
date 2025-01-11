@@ -1,0 +1,8 @@
+{
+    "resourceGroupName": {
+        "value": "rg-bicep-test"
+    },
+    "location": {
+        "value": "westus2"
+    }
+}
