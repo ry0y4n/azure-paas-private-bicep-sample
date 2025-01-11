@@ -41,3 +41,28 @@ module virtualNetwork './module/virtual-network.bicep' = {
     location: location
   }
 }
+
+// Create a Private DNS Zone
+module privateDnsZone './module/private-dns-zone.bicep' = {
+  scope: resourceGroup
+  name: 'privateDnsZone'
+  params: {
+    privateDnsZoneName: 'privatelink.azurewebsites.net'
+    vnetId: virtualNetwork.outputs.virtualNetworkId
+  }
+}
+
+// Create a Private Endpoint
+module privateEndpoint './module/private-endpoint.bicep' = {
+  scope: resourceGroup
+  name: 'privateEndpoint'
+  params: {
+    serviceName: 'app'
+    serviceId: appService.outputs.appServiceId
+    serviceGroupIds: ['sites']
+    uniquePostfix: uniquePostfix
+    location: location
+    subnetId: virtualNetwork.outputs.subnetId
+    privateDnsZoneId: privateDnsZone.outputs.privateDnsZoneId
+  }
+}
