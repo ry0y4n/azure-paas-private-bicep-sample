@@ -7,5 +7,6 @@ resource appService 'Microsoft.Web/sites@2024-04-01' = {
   location: location
   properties: {
     serverFarmId: appServicePlanId
+    publicNetworkAccess: 'Disabled'
   }
 }
